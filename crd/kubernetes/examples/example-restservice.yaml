@@ -1,0 +1,10 @@
+
+apiVersion: test.crd/v1
+kind: RestService
+metadata:
+  name: restservice
+spec:
+  deploymentName: restservice
+  namespace: default
+  image: restservice:latest
+  replicas: 1

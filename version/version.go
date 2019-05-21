@@ -10,7 +10,7 @@ type GetVersion interface {
 }
 
 type DeploymentVersion struct {
-	CommitID string `json:"commit_id"`
+	commitID string `json:"commit_id"`
 }
 
 func (d *DeploymentVersion) GetDeploymentVersion(envname string) (*DeploymentVersion, error) {
@@ -23,7 +23,7 @@ func (d *DeploymentVersion) GetDeploymentVersion(envname string) (*DeploymentVer
 
 	}
 
-	dep.CommitID = v
+	dep.commitID = v
 
 	return dep, nil
 
