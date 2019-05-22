@@ -2,17 +2,17 @@ package main
 
 import (
 	"flag"
-	"log"
 	"time"
 
 	"github.com/golang/glog"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
-	"k8s.io/client-go/tools/clientcmd"
 
-	clientset "github.com/AIDI/rpa/crd/pkg/client/clientset/versioned"
-	informers "github.com/AIDI/rpa/crd/pkg/client/informers/externalversions"
-	"github.com/AIDI/rpa/crd/pkg/signals"
+	controller "github.com/Rest-service/crd/controller"
+	kube "github.com/Rest-service/crd/kube"
+	clientset "github.com/Rest-service/crd/pkg/client/clientset/versioned"
+	informers "github.com/Rest-service/crd/pkg/client/informers/externalversions"
+	"github.com/Rest-service/crd/pkg/signals"
 	kubeinformers "k8s.io/client-go/informers"
 )
 
@@ -23,41 +23,22 @@ var (
 func init() {
 	flag.StringVar(&kubeconfig, "kubeconfig", "", "Path to a kubeconfig. Only required if out-of-cluster.")
 }
-
 func main() {
-	flag.Parse()
 
-	var config *rest.Config
-	var err error
-	if kubeconfig != "" {
+	var kubeClient kubernetes.Interface
+	var cfg *rest.Config
 
-		config, err = clientcmd.BuildConfigFromFlags("", kubeconfig)
-
-		if err != nil {
-			log.Fatal(err)
-
-		}
-
+	cfg, err := rest.InClusterConfig()
+	if err != nil {
+		kubeClient, cfg = kube.GetClientOutOfCluster(kubeconfig)
 	} else {
-		if config, err = rest.InClusterConfig(); err != nil {
-			glog.Fatalf("error creating client configuration: %v", err)
-		}
+		kubeClient, cfg = kube.GetClient()
 	}
 
 	// set up signals so we handle the first shutdown signal gracefully
 	stopCh := signals.SetupSignalHandler()
 
-	//cfg, err := clientcmd.BuildConfigFromFlags(masterURL, kubeconfig)
-	//if err != nil {
-	//	glog.Fatalf("Error building kubeconfig: %s", err.Error())
-	//}
-
-	kubeClient, err := kubernetes.NewForConfig(config)
-	if err != nil {
-		glog.Fatalf("Error building kubernetes clientset: %s", err.Error())
-	}
-
-	exampleClient, err := clientset.NewForConfig(config)
+	exampleClient, err := clientset.NewForConfig(cfg)
 	if err != nil {
 		glog.Fatalf("Error building example clientset: %s", err.Error())
 	}
@@ -65,7 +46,7 @@ func main() {
 	kubeInformerFactory := kubeinformers.NewSharedInformerFactory(kubeClient, time.Second*30)
 	exampleInformerFactory := informers.NewSharedInformerFactory(exampleClient, time.Second*30)
 
-	controller := NewController(kubeClient, exampleClient, kubeInformerFactory, exampleInformerFactory)
+	controller := controller.NewController(kubeClient, exampleClient, kubeInformerFactory, exampleInformerFactory)
 
 	go kubeInformerFactory.Start(stopCh)
 	go exampleInformerFactory.Start(stopCh)

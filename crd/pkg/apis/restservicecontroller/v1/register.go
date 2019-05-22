@@ -5,7 +5,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	restservicecontroller "github.com/AIDI/rpa/crd/pkg/apis/restservicecontroller"
+	restservicecontroller "github.com/Rest-service/crd/pkg/apis/restservicecontroller"
 )
 
 // SchemeGroupVersion is group version used to register these objects

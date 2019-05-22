@@ -13,7 +13,7 @@ func TestVersion_GetDeploymentVersion(t *testing.T) {
 
 	out, err := version.GetDeploymentVersion("GitCommit")
 	expected := &DeploymentVersion{
-		commitID: "testing",
+		CommitID: "testing",
 	}
 	if err != nil {
 
@@ -21,7 +21,7 @@ func TestVersion_GetDeploymentVersion(t *testing.T) {
 
 	}
 
-	if out.commitID != expected.commitID {
+	if out.CommitID != expected.CommitID {
 
 		t.Errorf("output is wrong. Have: %v, want: %v.", out, expected)
 

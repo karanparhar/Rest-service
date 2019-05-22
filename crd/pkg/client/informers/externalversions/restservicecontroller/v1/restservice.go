@@ -3,10 +3,10 @@ package v1
 import (
 	time "time"
 
-	restservicecontroller_v1 "github.com/AIDI/rpa/crd/pkg/apis/restservicecontroller/v1"
-	versioned "github.com/AIDI/rpa/crd/pkg/client/clientset/versioned"
-	internalinterfaces "github.com/AIDI/rpa/crd/pkg/client/informers/externalversions/internalinterfaces"
-	v1 "github.com/AIDI/rpa/crd/pkg/client/listers/restservicecontroller/v1"
+	restservicecontroller_v1 "github.com/Rest-service/crd/pkg/apis/restservicecontroller/v1"
+	versioned "github.com/Rest-service/crd/pkg/client/clientset/versioned"
+	internalinterfaces "github.com/Rest-service/crd/pkg/client/informers/externalversions/internalinterfaces"
+	v1 "github.com/Rest-service/crd/pkg/client/listers/restservicecontroller/v1"
 	meta_v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	watch "k8s.io/apimachinery/pkg/watch"

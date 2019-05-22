@@ -1,7 +1,7 @@
 FROM golang:alpine AS build-evn
 
 RUN  apk add --update \
-     git
+    git
 
 RUN mkdir -p /go/src/github.com/Rest-service
 
@@ -19,7 +19,8 @@ FROM alpine
 
 WORKDIR /root/restservice
 COPY --from=build-evn /go/src/github.com/Rest-service/restservice /root/restservice
-ARG GIT_COMMIT=unspecified
+ARG GIT_COMMIT
+
 ENV GitCommit=$GIT_COMMIT
 LABEL git_commit=$GIT_COMMIT
 EXPOSE 8080

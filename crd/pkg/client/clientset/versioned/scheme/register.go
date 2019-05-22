@@ -1,7 +1,7 @@
 package scheme
 
 import (
-	restservicecontrollerv1 "github.com/AIDI/rpa/crd/pkg/apis/restservicecontroller/v1"
+	restservicecontrollerv1 "github.com/Rest-service/crd/pkg/apis/restservicecontroller/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"

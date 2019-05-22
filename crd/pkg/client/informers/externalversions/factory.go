@@ -5,9 +5,9 @@ import (
 	sync "sync"
 	time "time"
 
-	versioned "github.com/AIDI/rpa/crd/pkg/client/clientset/versioned"
-	internalinterfaces "github.com/AIDI/rpa/crd/pkg/client/informers/externalversions/internalinterfaces"
-	restservicecontroller "github.com/AIDI/rpa/crd/pkg/client/informers/externalversions/restservicecontroller"
+	versioned "github.com/Rest-service/crd/pkg/client/clientset/versioned"
+	internalinterfaces "github.com/Rest-service/crd/pkg/client/informers/externalversions/internalinterfaces"
+	restservicecontroller "github.com/Rest-service/crd/pkg/client/informers/externalversions/restservicecontroller"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"

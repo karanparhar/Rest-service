@@ -3,7 +3,7 @@ package externalversions
 import (
 	"fmt"
 
-	v1 "github.com/AIDI/rpa/crd/pkg/apis/restservicecontroller/v1"
+	v1 "github.com/Rest-service/crd/pkg/apis/restservicecontroller/v1"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
 	cache "k8s.io/client-go/tools/cache"
 )

@@ -9,22 +9,27 @@ type GetVersion interface {
 	GetDeploymentVersion(envname string) (*DeploymentVersion, error)
 }
 
+func NewDeploymentVersion() GetVersion {
+
+	return &DeploymentVersion{}
+
+}
+
 type DeploymentVersion struct {
-	commitID string `json:"commit_id"`
+	CommitID string `json:"commit_id"`
 }
 
 func (d *DeploymentVersion) GetDeploymentVersion(envname string) (*DeploymentVersion, error) {
-	dep := &DeploymentVersion{}
 	v := os.Getenv(envname)
 
 	if v == "" {
 
-		return nil, errors.New("env is not set")
+		return nil, errors.New("commit id is not set")
 
 	}
 
-	dep.commitID = v
+	d.CommitID = v
 
-	return dep, nil
+	return d, nil
 
 }

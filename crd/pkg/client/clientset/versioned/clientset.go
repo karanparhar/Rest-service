@@ -1,7 +1,7 @@
 package versioned
 
 import (
-	restservicecontrollerv1 "github.com/AIDI/rpa/crd/pkg/client/clientset/versioned/typed/restservicecontroller/v1"
+	restservicecontrollerv1 "github.com/Rest-service/crd/pkg/client/clientset/versioned/typed/restservicecontroller/v1"
 	glog "github.com/golang/glog"
 	discovery "k8s.io/client-go/discovery"
 	rest "k8s.io/client-go/rest"

@@ -5,33 +5,38 @@ GOCLEAN=$(GOCMD) clean
 GOTEST=$(GOCMD) test
 GOGET=$(GOCMD) get
 BINARY_NAME=restservice
-all: test build
+CommitID=$(shell git rev-list -1 HEAD)
+all: fmt test build-restservice build-crd deploy-crd create-crd deploy-restservice
 fmt:
 		$(GOCMD) fmt ./...
-build-Mac:
-
-		$(GOBUILD) -o $(BINARY_NAME) -v
-linux:
-		GOOS=linux $(GOBUILD) -o $(BINARY_NAME) -v	
 test:
 		$(GOTEST) -v ./...
-clean:
-		$(GOCLEAN)
-		rm -f $(BINARY_NAME)
-		rm -f $(BINARY_UNIX)
-run:
-		$(GOBUILD) -o $(BINARY_NAME) -v ./...
-		./$(BINARY_NAME)
-get-deps:
-		$(GOGET)
-# Cross compilation
-build-linux:
-		CGO_ENABLED=0 GOOS=linux GOARCH=amd64 $(GOBUILD) -o $(BINARY_UNIX) -v
-docker:
-#need properties file to run this
-		docker build -t restservice --build-arg GIT_COMMIT=$(git rev-list -1 HEAD) .
+
+build-restservice:
+        
+		docker build -t restservice --build-arg GIT_COMMIT=${CommitID} .
+
+build-crd:
+
+		docker build -t crd crd/.	
+
+deploy-crd:
+
+		kubectl apply -f crd/kubernetes/examples/crd-deployment.yaml
+
+create-crd:
+
+		kubectl apply -f crd/kubernetes/examples/crd.yaml
+
+deploy-restservice:
+
+		kubectl apply -f crd/kubernetes/examples/example-restservice.yaml
+		kubectl apply -f crd/kubernetes/examples/restservice-service.yaml						
+
 docker-run:
 
 		docker run -d  -p 8080:8080 restservice:latest 
+
+
 
 

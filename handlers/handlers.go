@@ -16,7 +16,7 @@ func Router(r *mux.Router) *mux.Router {
 
 func DeploymentVersion(w http.ResponseWriter, r *http.Request) {
 
-	var version = v.DeploymentVersion{}
+	var version = v.NewDeploymentVersion()
 
 	out, err := version.GetDeploymentVersion("GitCommit")
 

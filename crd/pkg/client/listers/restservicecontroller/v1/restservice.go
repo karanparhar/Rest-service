@@ -1,7 +1,7 @@
 package v1
 
 import (
-	v1 "github.com/AIDI/rpa/crd/pkg/apis/restservicecontroller/v1"
+	v1 "github.com/Rest-service/crd/pkg/apis/restservicecontroller/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/client-go/tools/cache"
