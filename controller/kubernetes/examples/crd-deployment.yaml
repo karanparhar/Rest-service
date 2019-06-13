@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crd
+  namespace: kube-system
+  labels:
+    app: crd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: crd
+  template:
+    metadata:
+      labels:
+        app: crd
+    spec:
+      containers:
+        - name: crd
+          image: crd:latest
+          imagePullPolicy: Never
+          command: ["./crd"]
