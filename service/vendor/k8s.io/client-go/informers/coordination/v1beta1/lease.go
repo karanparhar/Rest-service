@@ -46,14 +46,14 @@ type leaseInformer struct {
 
 // NewLeaseInformer constructs a new informer for Lease type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
-// one. This reduces memory footprint and number of connections to the server.
+// one. This reduces memory Restservicetprint and number of connections to the server.
 func NewLeaseInformer(client kubernetes.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers) cache.SharedIndexInformer {
 	return NewFilteredLeaseInformer(client, namespace, resyncPeriod, indexers, nil)
 }
 
 // NewFilteredLeaseInformer constructs a new informer for Lease type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
-// one. This reduces memory footprint and number of connections to the server.
+// one. This reduces memory Restservicetprint and number of connections to the server.
 func NewFilteredLeaseInformer(client kubernetes.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
 	return cache.NewSharedIndexInformer(
 		&cache.ListWatch{

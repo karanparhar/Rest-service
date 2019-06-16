@@ -557,7 +557,7 @@ func (o *Buffer) unmarshalType(st reflect.Type, prop *StructProperties, is_group
 					required--
 				}
 			} else {
-				// This is imprecise. It can be fooled by a required field
+				// This is imprecise. It can be Restserviceled by a required field
 				// with a tag > 64 that is encoded twice; that's very rare.
 				// A fully correct implementation would require allocating
 				// a data structure, which we would like to avoid.

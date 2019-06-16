@@ -46,14 +46,14 @@ type deploymentInformer struct {
 
 // NewDeploymentInformer constructs a new informer for Deployment type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
-// one. This reduces memory footprint and number of connections to the server.
+// one. This reduces memory Restservicetprint and number of connections to the server.
 func NewDeploymentInformer(client kubernetes.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers) cache.SharedIndexInformer {
 	return NewFilteredDeploymentInformer(client, namespace, resyncPeriod, indexers, nil)
 }
 
 // NewFilteredDeploymentInformer constructs a new informer for Deployment type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
-// one. This reduces memory footprint and number of connections to the server.
+// one. This reduces memory Restservicetprint and number of connections to the server.
 func NewFilteredDeploymentInformer(client kubernetes.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
 	return cache.NewSharedIndexInformer(
 		&cache.ListWatch{

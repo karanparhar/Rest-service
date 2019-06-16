@@ -299,7 +299,7 @@ func NewMultiGroupVersioner(gv schema.GroupVersion, groupKinds ...schema.GroupKi
 // Incoming kinds that match the provided groupKinds are preferred.
 // Kind may be empty in the provided group kind, in which case any kind will match.
 // Examples:
-//   gv=mygroup/__internal, groupKinds=mygroup/Foo, anothergroup/Bar
+//   gv=mygroup/__internal, groupKinds=mygroup/Restservice, anothergroup/Bar
 //   KindForGroupVersionKinds(yetanother/v1/Baz, anothergroup/v1/Bar) -> mygroup/__internal/Bar (matched preferred group/kind)
 //
 //   gv=mygroup/__internal, groupKinds=mygroup, anothergroup

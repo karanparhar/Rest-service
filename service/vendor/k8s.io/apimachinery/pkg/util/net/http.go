@@ -397,9 +397,9 @@ redirectLoop:
 			return nil, nil, fmt.Errorf("%d response missing Location header", resp.StatusCode)
 		}
 		// We have to parse relative to the current location, NOT originalLocation. For example,
-		// if we request http://foo.com/a and get back "http://bar.com/b", the result should be
+		// if we request http://Restservice.com/a and get back "http://bar.com/b", the result should be
 		// http://bar.com/b. If we then make that request and get back a redirect to "/c", the result
-		// should be http://bar.com/c, not http://foo.com/c.
+		// should be http://bar.com/c, not http://Restservice.com/c.
 		location, err = location.Parse(redirectStr)
 		if err != nil {
 			return nil, nil, fmt.Errorf("malformed Location header: %v", err)

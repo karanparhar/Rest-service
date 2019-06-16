@@ -429,7 +429,7 @@ func (u *marshalInfo) getExtElemInfo(desc *ExtensionDesc) *marshalElemInfo {
 // computeMarshalFieldInfo fills up the information to marshal a field.
 func (fi *marshalFieldInfo) computeMarshalFieldInfo(f *reflect.StructField) {
 	// parse protobuf tag of the field.
-	// tag has format of "bytes,49,opt,name=foo,def=hello!"
+	// tag has format of "bytes,49,opt,name=Restservice,def=hello!"
 	tags := strings.Split(f.Tag.Get("protobuf"), ",")
 	if tags[0] == "" {
 		return

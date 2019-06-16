@@ -992,7 +992,7 @@ type APIResource struct {
 	// version is the preferred version of the resource.  Empty implies the version of the containing resource list
 	// For subresources, this may have a different value, for example: v1 (while inside a v1beta1 version of the core resource's group)".
 	Version string `json:"version,omitempty" protobuf:"bytes,9,opt,name=version"`
-	// kind is the kind for the resource (e.g. 'Foo' is the kind for a resource 'foo')
+	// kind is the kind for the resource (e.g. 'Restservice' is the kind for a resource 'Restservice')
 	Kind string `json:"kind" protobuf:"bytes,3,opt,name=kind"`
 	// verbs is a list of supported kube verbs (this includes get, list, watch, create,
 	// update, patch, delete, deletecollection, and proxy)

@@ -50,7 +50,7 @@ for a protocol buffer variable v:
 	That is, optional or required field int32 f becomes F *int32.
   - Repeated fields are slices.
   - Helper functions are available to aid the setting of fields.
-	msg.Foo = proto.String("hello") // set field
+	msg.Restservice = proto.String("hello") // set field
   - Constants are defined to hold the default values of all fields that
 	have them.  They have the form Default_StructName_FieldName.
 	Because the getter methods handle defaulted values,
@@ -80,7 +80,7 @@ Given file test.proto, containing
 
 	package example;
 
-	enum FOO { X = 17; }
+	enum Restservice { X = 17; }
 
 	message Test {
 	  required string label = 1;
@@ -102,31 +102,31 @@ The resulting file, test.pb.go, is:
 	import proto "github.com/golang/protobuf/proto"
 	import math "math"
 
-	type FOO int32
+	type Restservice int32
 	const (
-		FOO_X FOO = 17
+		Restservice_X Restservice = 17
 	)
-	var FOO_name = map[int32]string{
+	var Restservice_name = map[int32]string{
 		17: "X",
 	}
-	var FOO_value = map[string]int32{
+	var Restservice_value = map[string]int32{
 		"X": 17,
 	}
 
-	func (x FOO) Enum() *FOO {
-		p := new(FOO)
+	func (x Restservice) Enum() *Restservice {
+		p := new(Restservice)
 		*p = x
 		return p
 	}
-	func (x FOO) String() string {
-		return proto.EnumName(FOO_name, int32(x))
+	func (x Restservice) String() string {
+		return proto.EnumName(Restservice_name, int32(x))
 	}
-	func (x *FOO) UnmarshalJSON(data []byte) error {
-		value, err := proto.UnmarshalJSONEnum(FOO_value, data)
+	func (x *Restservice) UnmarshalJSON(data []byte) error {
+		value, err := proto.UnmarshalJSONEnum(Restservice_value, data)
 		if err != nil {
 			return err
 		}
-		*x = FOO(value)
+		*x = Restservice(value)
 		return nil
 	}
 
@@ -216,7 +216,7 @@ The resulting file, test.pb.go, is:
 	}
 
 	func init() {
-		proto.RegisterEnum("example.FOO", FOO_name, FOO_value)
+		proto.RegisterEnum("example.Restservice", Restservice_name, Restservice_value)
 	}
 
 To create and play with a Test object:

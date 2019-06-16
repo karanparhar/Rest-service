@@ -7,6 +7,7 @@ import (
 	"github.com/golang/glog"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
+	"k8s.io/klog"
 
 	controller "github.com/Rest-service/controller/controller"
 	kube "github.com/Rest-service/controller/kube"
@@ -24,7 +25,7 @@ func init() {
 	flag.StringVar(&kubeconfig, "kubeconfig", "", "Path to a kubeconfig. Only required if out-of-cluster.")
 }
 func main() {
-
+	flag.Parse()
 	var kubeClient kubernetes.Interface
 	var cfg *rest.Config
 
@@ -40,7 +41,7 @@ func main() {
 
 	exampleClient, err := clientset.NewForConfig(cfg)
 	if err != nil {
-		glog.Fatalf("Error building example clientset: %s", err.Error())
+		klog.Fatalf("Error building example clientset: %s", err.Error())
 	}
 
 	kubeInformerFactory := kubeinformers.NewSharedInformerFactory(kubeClient, time.Second*30)

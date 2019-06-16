@@ -45,14 +45,14 @@ type storageClassInformer struct {
 
 // NewStorageClassInformer constructs a new informer for StorageClass type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
-// one. This reduces memory footprint and number of connections to the server.
+// one. This reduces memory Restservicetprint and number of connections to the server.
 func NewStorageClassInformer(client kubernetes.Interface, resyncPeriod time.Duration, indexers cache.Indexers) cache.SharedIndexInformer {
 	return NewFilteredStorageClassInformer(client, resyncPeriod, indexers, nil)
 }
 
 // NewFilteredStorageClassInformer constructs a new informer for StorageClass type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
-// one. This reduces memory footprint and number of connections to the server.
+// one. This reduces memory Restservicetprint and number of connections to the server.
 func NewFilteredStorageClassInformer(client kubernetes.Interface, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
 	return cache.NewSharedIndexInformer(
 		&cache.ListWatch{

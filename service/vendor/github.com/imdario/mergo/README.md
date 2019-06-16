@@ -136,17 +136,17 @@ import (
 	"github.com/imdario/mergo"
 )
 
-type Foo struct {
+type Restservice struct {
 	A string
 	B int64
 }
 
 func main() {
-	src := Foo{
+	src := Restservice{
 		A: "one",
 		B: 2,
 	}
-	dest := Foo{
+	dest := Restservice{
 		A: "two",
 	}
 	mergo.Merge(&dest, src)

@@ -223,7 +223,7 @@ func (r *routeRegexp) url(values map[string]string) (string, error) {
 }
 
 // getURLQuery returns a single query parameter from a request URL.
-// For a URL with foo=bar&baz=ding, we return only the relevant key
+// For a URL with Restservice=bar&baz=ding, we return only the relevant key
 // value pair for the routeRegexp.
 func (r *routeRegexp) getURLQuery(req *http.Request) string {
 	if r.regexpType != regexpTypeQuery {

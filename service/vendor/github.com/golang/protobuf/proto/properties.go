@@ -191,7 +191,7 @@ func (p *Properties) String() string {
 
 // Parse populates p by parsing a string in the protobuf struct field tag style.
 func (p *Properties) Parse(s string) {
-	// "bytes,49,opt,name=foo,def=hello!"
+	// "bytes,49,opt,name=Restservice,def=hello!"
 	fields := strings.Split(s, ",") // breaks def=, but handled below.
 	if len(fields) < 2 {
 		fmt.Fprintf(os.Stderr, "proto: tag has too few fields: %q\n", s)

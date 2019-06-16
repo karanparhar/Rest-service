@@ -34,21 +34,21 @@ import (
 const controllerAgentName = "controller"
 
 const (
-	// SuccessSynced is used as part of the Event 'reason' when a Foo is synced
+	// SuccessSynced is used as part of the Event 'reason' when a Restservice is synced
 	SuccessSynced = "Synced"
-	// ErrResourceExists is used as part of the Event 'reason' when a Foo fails
+	// ErrResourceExists is used as part of the Event 'reason' when a Restservice fails
 	// to sync due to a Deployment of the same name already existing.
 	ErrResourceExists = "ErrResourceExists"
 
 	// MessageResourceExists is the message used for Events when a resource
 	// fails to sync due to a Deployment already existing
-	MessageResourceExists = "Resource %q already exists and is not managed by Foo"
-	// MessageResourceSynced is the message used for an Event fired when a Foo
+	MessageResourceExists = "Resource %q already exists and is not managed by Restservice"
+	// MessageResourceSynced is the message used for an Event fired when a Restservice
 	// is synced successfully
-	MessageResourceSynced = "Foo synced successfully"
+	MessageResourceSynced = "Restservice synced successfully"
 )
 
-// Controller is the controller implementation for Foo resources
+// Controller is the controller implementation for Restservice resources
 type Controller struct {
 	// kubeclientset is a standard kubernetes clientset
 	kubeclientset kubernetes.Interface
@@ -78,7 +78,7 @@ func NewController(
 	kubeInformerFactory kubeinformers.SharedInformerFactory,
 	sampleInformerFactory informers.SharedInformerFactory) *Controller {
 
-	// obtain references to shared index informers for the Deployment and Foo
+	// obtain references to shared index informers for the Deployment and Restservice
 	// types.
 	deploymentInformer := kubeInformerFactory.Apps().V1().Deployments()
 	restserviceInformer := sampleInformerFactory.RestServicecontroller().V1().RestServicees()
@@ -87,7 +87,7 @@ func NewController(
 	// Add restservice-controller types to the default Kubernetes Scheme so Events can be
 	// logged for restservice-controller types.
 	restservicescheme.AddToScheme(scheme.Scheme)
-	glog.V(4).Info("Creating event broadcaster")
+	klog.V(4).Info("Creating event broadcaster")
 	eventBroadcaster := record.NewBroadcaster()
 	eventBroadcaster.StartLogging(glog.Infof)
 	eventBroadcaster.StartRecordingToSink(&typedcorev1.EventSinkImpl{Interface: kubeclientset.CoreV1().Events("")})
@@ -104,34 +104,24 @@ func NewController(
 		recorder:          recorder,
 	}
 
-	glog.Info("Setting up event handlers")
-	// Set up an event handler for when Foo resources change
+	klog.Info("Setting up event handlers")
+	// Set up an event handler for when Restservice resources change
 	restserviceInformer.Informer().AddEventHandler(cache.ResourceEventHandlerFuncs{
-		AddFunc: controller.enqueueFoo,
+		AddFunc: controller.enqueueRestservice,
 		UpdateFunc: func(old, new interface{}) {
-			controller.enqueueFoo(new)
+			controller.enqueueRestservice(new)
 		},
 	})
 	// Set up an event handler for when Deployment resources change. This
 	// handler will lookup the owner of the given Deployment, and if it is
-	// owned by a Foo resource will enqueue that Foo resource for
+	// owned by a Restservice resource will enqueue that Restservice resource for
 	// processing. This way, we don't need to implement custom logic for
 	// handling Deployment resources. More info on this pattern:
 	// https://github.com/kubernetes/community/blob/8cafef897a22026d42f5e5bb3f104febe7e29830/contributors/devel/controllers.md
 	deploymentInformer.Informer().AddEventHandler(cache.ResourceEventHandlerFuncs{
-		AddFunc: controller.handleObject,
-		UpdateFunc: func(old, new interface{}) {
-			newDepl := new.(*appsv1.Deployment)
-			oldDepl := old.(*appsv1.Deployment)
-			if newDepl.ResourceVersion == oldDepl.ResourceVersion {
-				// Periodic resync will send update events for all known Deployments.
-				// Two different versions of the same Deployment will always have different RVs.
-				controller.handleObject(new)
-				return
-			}
-			//controller.handleObject(new)
-		},
-		DeleteFunc: controller.handleObject,
+		AddFunc:    controller.addDeployment,
+		UpdateFunc: controller.updateDeployment,
+		DeleteFunc: controller.deleteDeployment,
 	})
 
 	return controller
@@ -146,23 +136,23 @@ func (c *Controller) Run(threadiness int, stopCh <-chan struct{}) error {
 	defer c.workqueue.ShutDown()
 
 	// Start the informer factories to begin populating the informer caches
-	glog.Info("Starting Foo controller")
+	klog.Info("Starting Restservice controller")
 
 	// Wait for the caches to be synced before starting workers
-	glog.Info("Waiting for informer caches to sync")
+	klog.Info("Waiting for informer caches to sync")
 	if ok := cache.WaitForCacheSync(stopCh, c.deploymentsSynced, c.restserviceSynced); !ok {
 		return fmt.Errorf("failed to wait for caches to sync")
 	}
 
-	glog.Info("Starting workers")
-	// Launch two workers to process Foo resources
+	klog.Info("Starting workers")
+	// Launch two workers to process Restservice resources
 	for i := 0; i < threadiness; i++ {
 		go wait.Until(c.runWorker, time.Second, stopCh)
 	}
 
-	glog.Info("Started workers")
+	klog.Info("Started workers")
 	<-stopCh
-	glog.Info("Shutting down workers")
+	klog.Info("Shutting down workers")
 
 	return nil
 }
@@ -209,7 +199,7 @@ func (c *Controller) processNextWorkItem() bool {
 			return nil
 		}
 		// Run the syncHandler, passing it the namespace/name string of the
-		// Foo resource to be synced.
+		// Restservice resource to be synced.
 		if err := c.syncHandler(key); err != nil {
 			return fmt.Errorf("error syncing '%s': %s", key, err.Error())
 		}
@@ -229,7 +219,7 @@ func (c *Controller) processNextWorkItem() bool {
 }
 
 // syncHandler compares the actual state with the desired, and attempts to
-// converge the two. It then updates the Status block of the Foo resource
+// converge the two. It then updates the Status block of the Restservice resource
 // with the current status of the resource.
 func (c *Controller) syncHandler(key string) error {
 	// Convert the namespace/name string into a distinct namespace and name
@@ -239,20 +229,19 @@ func (c *Controller) syncHandler(key string) error {
 		return nil
 	}
 
-	// Get the Foo resource with this namespace/name
-	foo, err := c.restserviceLister.RestServicees(namespace).Get(name)
+	// Get the Restservice resource with this namespace/name
+	Restservice, err := c.restserviceLister.RestServicees(namespace).Get(name)
 	if err != nil {
-		// The Foo resource may no longer exist, in which case we stop
+		// The Restservice resource may no longer exist, in which case we stop
 		// processing.
 		if errors.IsNotFound(err) {
-			runtime.HandleError(fmt.Errorf("foo '%s' in work queue no longer exists", key))
+			runtime.HandleError(fmt.Errorf("Restservice '%s' in work queue no longer exists", key))
 			return nil
 		}
 		return err
 	}
-
-	deploymentName := foo.Spec.DeploymentName
-	namespaceName := foo.Spec.NameSpace
+	deploymentName := Restservice.Spec.DeploymentName
+	namespaceName := Restservice.Spec.NameSpace
 	if deploymentName == "" {
 		// We choose to absorb the error here as the worker would requeue the
 		// resource otherwise. Instead, the next time the resource is updated
@@ -261,70 +250,53 @@ func (c *Controller) syncHandler(key string) error {
 		return nil
 	}
 
-	// Get the deployment with the name specified in Foo.spec
+	// Get the deployment with the name specified in Restservice.spec
 	deployment, err := c.deploymentsLister.Deployments(namespaceName).Get(deploymentName)
 	// If the resource doesn't exist, we'll create it
-	if errors.IsNotFound(err) {
-		deployment, err = c.kubeclientset.AppsV1().Deployments(namespaceName).Create(newDeployment(foo))
-
-	}
-
 	if err != nil {
-		return err
+		if errors.IsNotFound(err) {
+			deployment, err = c.kubeclientset.AppsV1().Deployments(namespaceName).Create(newDeployment(Restservice))
+
+			return err
+		}
 	}
 
-	// If the Deployment is not controlled by this Foo resource, we should log
+	// If the Deployment is not controlled by this Restservice resource, we should log
 	// a warning to the event recorder and ret
-	if !metav1.IsControlledBy(deployment, foo) {
+	if !metav1.IsControlledBy(deployment, Restservice) {
 		msg := fmt.Sprintf(MessageResourceExists, deployment.Name)
-		c.recorder.Event(foo, corev1.EventTypeWarning, ErrResourceExists, msg)
+		c.recorder.Event(Restservice, corev1.EventTypeWarning, ErrResourceExists, msg)
 		return fmt.Errorf(msg)
 	}
-
-	// If this number of the replicas on the Foo resource is specified, and the
-	// number does not equal the current desired replicas on the Deployment, we
-	// should update the Deployment resource.
-	if foo.Spec.Replicas != nil && *foo.Spec.Replicas != *deployment.Spec.Replicas {
-		klog.V(4).Infof("Foo %s replicas: %d, deployment replicas: %d", name, *foo.Spec.Replicas, *deployment.Spec.Replicas)
-		deployment, err = c.kubeclientset.AppsV1().Deployments(foo.Namespace).Update(newDeployment(foo))
-	}
-
-	// If an error occurs during Update, we'll requeue the item so we can
-	// attempt processing again later. THis could have been caused by a
-	// temporary network failure, or any other transient reason.
-	if err != nil {
-		return err
-	}
-
-	// Finally, we update the status block of the Foo resource to reflect the
+	// Finally, we update the status block of the Restservice resource to reflect the
 	// current state of the world
-	err = c.updateFooStatus(foo, deployment)
+	err = c.updateRestserviceStatus(Restservice, deployment)
 	if err != nil {
 		return err
 	}
 
-	c.recorder.Event(foo, corev1.EventTypeNormal, SuccessSynced, MessageResourceSynced)
+	c.recorder.Event(Restservice, corev1.EventTypeNormal, SuccessSynced, MessageResourceSynced)
 	return nil
 }
 
-func (c *Controller) updateFooStatus(foo *restservicev1.RestService, deployment *appsv1.Deployment) error {
+func (c *Controller) updateRestserviceStatus(Restservice *restservicev1.RestService, deployment *appsv1.Deployment) error {
 	// NEVER modify objects from the store. It's a read-only, local cache.
 	// You can use DeepCopy() to make a deep copy of original object and modify this copy
 	// Or create a copy manually for better performance
-	fooCopy := foo.DeepCopy()
-	fooCopy.Status.AvailableReplicas = deployment.Status.AvailableReplicas
+	RestserviceCopy := Restservice.DeepCopy()
+	RestserviceCopy.Status.AvailableReplicas = deployment.Status.AvailableReplicas
 	// If the CustomResourceSubresources feature gate is not enabled,
-	// we must use Update instead of UpdateStatus to update the Status block of the Foo resource.
+	// we must use Update instead of UpdateStatus to update the Status block of the Restservice resource.
 	// UpdateStatus will not allow changes to the Spec of the resource,
 	// which is ideal for ensuring nothing other than resource status has been updated.
-	_, err := c.sampleclientset.RestServicecontrollerV1().RestServicees(foo.Namespace).Update(fooCopy)
+	_, err := c.sampleclientset.RestServicecontrollerV1().RestServicees(Restservice.Namespace).Update(RestserviceCopy)
 	return err
 }
 
-// enqueueFoo takes a Foo resource and converts it into a namespace/name
+// enqueueRestservice takes a Restservice resource and converts it into a namespace/name
 // string which is then put onto the work queue. This method should *not* be
-// passed resources of any type other than Foo.
-func (c *Controller) enqueueFoo(obj interface{}) {
+// passed resources of any type other than Restservice.
+func (c *Controller) enqueueRestservice(obj interface{}) {
 	var key string
 	var err error
 	if key, err = cache.MetaNamespaceKeyFunc(obj); err != nil {
@@ -335,9 +307,9 @@ func (c *Controller) enqueueFoo(obj interface{}) {
 }
 
 // handleObject will take any resource implementing metav1.Object and attempt
-// to find the Foo resource that 'owns' it. It does this by looking at the
+// to find the Restservice resource that 'owns' it. It does this by looking at the
 // objects metadata.ownerReferences field for an appropriate OwnerReference.
-// It then enqueues that Foo resource to be processed. If the object does not
+// It then enqueues that Restservice resource to be processed. If the object does not
 // have an appropriate OwnerReference, it will simply be skipped.
 func (c *Controller) handleObject(obj interface{}) {
 	var object metav1.Object
@@ -357,43 +329,75 @@ func (c *Controller) handleObject(obj interface{}) {
 	}
 	glog.V(4).Infof("Processing object: %s", object.GetName())
 	if ownerRef := metav1.GetControllerOf(object); ownerRef != nil {
-		if ownerRef.Kind != "Karan" {
+		if ownerRef.Kind != "RestService" {
 			return
 		}
 
-		foo, err := c.restserviceLister.RestServicees(object.GetNamespace()).Get(ownerRef.Name)
+		Restservice, err := c.restserviceLister.RestServicees(object.GetNamespace()).Get(ownerRef.Name)
 		if err != nil {
-			glog.V(4).Infof("ignoring orphaned object '%s' of foo '%s'", object.GetSelfLink(), ownerRef.Name)
+			glog.V(4).Infof("ignoring orphaned object '%s' of Restservice '%s'", object.GetSelfLink(), ownerRef.Name)
 			return
 		}
 
-		c.enqueueFoo(foo)
+		c.enqueueRestservice(Restservice)
 		return
 	}
 }
 
-// newDeployment creates a new Deployment for a Foo resource. It also sets
+func (c *Controller) addDeployment(obj interface{}) {
+	d := obj.(*appsv1.Deployment)
+	klog.V(4).Infof("Adding deployment %s", d.Name)
+	c.handleObject(d)
+
+}
+
+func (c *Controller) updateDeployment(old, cur interface{}) {
+	oldD := old.(*appsv1.Deployment)
+	curD := cur.(*appsv1.Deployment)
+	klog.V(4).Infof("Updating deployment %s", oldD.Name)
+	c.handleObject(curD)
+}
+
+func (c *Controller) deleteDeployment(obj interface{}) {
+	d, ok := obj.(*appsv1.Deployment)
+	if !ok {
+		tombstone, ok := obj.(cache.DeletedFinalStateUnknown)
+		if !ok {
+			runtime.HandleError(fmt.Errorf("Couldn't get object from tombstone %#v", obj))
+			return
+		}
+		d, ok = tombstone.Obj.(*appsv1.Deployment)
+		if !ok {
+			runtime.HandleError(fmt.Errorf("Tombstone contained object that is not a Deployment %#v", obj))
+			return
+		}
+	}
+	klog.V(4).Infof("Deleting deployment %s", d.Name)
+	c.handleObject(d)
+}
+
+// newDeployment creates a new Deployment for a Restservice resource. It also sets
 // the appropriate OwnerReferences on the resource so handleObject can discover
-// the Foo resource that 'owns' it.
-func newDeployment(foo *restservicev1.RestService) *appsv1.Deployment {
+// the Restservice resource that 'owns' it.
+func newDeployment(Restservice *restservicev1.RestService) *appsv1.Deployment {
 	labels := map[string]string{
-		"app":        foo.Spec.DeploymentName,
-		"controller": foo.Name,
+		"app":        Restservice.Spec.DeploymentName,
+		"controller": Restservice.Name,
 	}
 	return &appsv1.Deployment{
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      foo.Spec.DeploymentName,
-			Namespace: foo.Namespace,
+			Name:      Restservice.Spec.DeploymentName,
+			Namespace: Restservice.Namespace,
 			OwnerReferences: []metav1.OwnerReference{
-				*metav1.NewControllerRef(foo, schema.GroupVersionKind{
+				*metav1.NewControllerRef(Restservice, schema.GroupVersionKind{
 					Group:   restservicev1.SchemeGroupVersion.Group,
 					Version: restservicev1.SchemeGroupVersion.Version,
-					Kind:    "Karan",
+					Kind:    "RestService",
 				}),
 			},
 		},
 		Spec: appsv1.DeploymentSpec{
-			Replicas: foo.Spec.Replicas,
+			Replicas: Restservice.Spec.Replicas,
 			Selector: &metav1.LabelSelector{
 				MatchLabels: labels,
 			},
@@ -404,8 +408,8 @@ func newDeployment(foo *restservicev1.RestService) *appsv1.Deployment {
 				Spec: corev1.PodSpec{
 					Containers: []corev1.Container{
 						{
-							Name:            foo.Spec.DeploymentName,
-							Image:           foo.Spec.Image,
+							Name:            Restservice.Spec.DeploymentName,
+							Image:           Restservice.Spec.Image,
 							ImagePullPolicy: "Never",
 
 							Resources: corev1.ResourceRequirements{

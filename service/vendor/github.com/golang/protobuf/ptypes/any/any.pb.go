@@ -26,47 +26,47 @@ const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 //
 // Example 1: Pack and unpack a message in C++.
 //
-//     Foo foo = ...;
+//     Restservice Restservice = ...;
 //     Any any;
-//     any.PackFrom(foo);
+//     any.PackFrom(Restservice);
 //     ...
-//     if (any.UnpackTo(&foo)) {
+//     if (any.UnpackTo(&Restservice)) {
 //       ...
 //     }
 //
 // Example 2: Pack and unpack a message in Java.
 //
-//     Foo foo = ...;
-//     Any any = Any.pack(foo);
+//     Restservice Restservice = ...;
+//     Any any = Any.pack(Restservice);
 //     ...
-//     if (any.is(Foo.class)) {
-//       foo = any.unpack(Foo.class);
+//     if (any.is(Restservice.class)) {
+//       Restservice = any.unpack(Restservice.class);
 //     }
 //
 //  Example 3: Pack and unpack a message in Python.
 //
-//     foo = Foo(...)
+//     Restservice = Restservice(...)
 //     any = Any()
-//     any.Pack(foo)
+//     any.Pack(Restservice)
 //     ...
-//     if any.Is(Foo.DESCRIPTOR):
-//       any.Unpack(foo)
+//     if any.Is(Restservice.DESCRIPTOR):
+//       any.Unpack(Restservice)
 //       ...
 //
 //  Example 4: Pack and unpack a message in Go
 //
-//      foo := &pb.Foo{...}
-//      any, err := ptypes.MarshalAny(foo)
+//      Restservice := &pb.Restservice{...}
+//      any, err := ptypes.MarshalAny(Restservice)
 //      ...
-//      foo := &pb.Foo{}
-//      if err := ptypes.UnmarshalAny(any, foo); err != nil {
+//      Restservice := &pb.Restservice{}
+//      if err := ptypes.UnmarshalAny(any, Restservice); err != nil {
 //        ...
 //      }
 //
 // The pack methods provided by protobuf library will by default use
 // 'type.googleapis.com/full.type.name' as the type URL and the unpack
 // methods only use the fully qualified type name after the last '/'
-// in the type URL, for example "foo.bar.com/x/y.z" will yield type
+// in the type URL, for example "Restservice.bar.com/x/y.z" will yield type
 // name "y.z".
 //
 //

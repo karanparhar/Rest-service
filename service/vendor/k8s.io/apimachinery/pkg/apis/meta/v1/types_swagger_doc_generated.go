@@ -55,7 +55,7 @@ var map_APIResource = map[string]string{
 	"namespaced":         "namespaced indicates if a resource is namespaced or not.",
 	"group":              "group is the preferred group of the resource.  Empty implies the group of the containing resource list. For subresources, this may have a different value, for example: Scale\".",
 	"version":            "version is the preferred version of the resource.  Empty implies the version of the containing resource list For subresources, this may have a different value, for example: v1 (while inside a v1beta1 version of the core resource's group)\".",
-	"kind":               "kind is the kind for the resource (e.g. 'Foo' is the kind for a resource 'foo')",
+	"kind":               "kind is the kind for the resource (e.g. 'Restservice' is the kind for a resource 'Restservice')",
 	"verbs":              "verbs is a list of supported kube verbs (this includes get, list, watch, create, update, patch, delete, deletecollection, and proxy)",
 	"shortNames":         "shortNames is a list of suggested short names of the resource.",
 	"categories":         "categories is a list of the grouped resources this resource belongs to (e.g. 'all')",

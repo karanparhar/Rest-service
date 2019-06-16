@@ -138,7 +138,7 @@ Sample Dump Output
 See the Dump example for details on the setup of the types and variables being
 shown here.
 
-	(main.Foo) {
+	(main.Restservice) {
 	 unexportedField: (*main.Bar)(0xf84002e210)({
 	  flag: (main.Flag) flagTwo,
 	  data: (uintptr) <nil>

@@ -356,7 +356,7 @@ func loadLibraryEx(name string, system bool) (*DLL, error) {
 			flags = LOAD_LIBRARY_SEARCH_SYSTEM32
 		} else if isBaseName(name) {
 			// WindowsXP or unpatched Windows machine
-			// trying to load "foo.dll" out of the system
+			// trying to load "Restservice.dll" out of the system
 			// folder, but LoadLibraryEx doesn't support
 			// that yet on their system, so emulate it.
 			systemdir, err := GetSystemDirectory()

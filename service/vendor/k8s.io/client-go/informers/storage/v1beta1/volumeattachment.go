@@ -45,14 +45,14 @@ type volumeAttachmentInformer struct {
 
 // NewVolumeAttachmentInformer constructs a new informer for VolumeAttachment type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
-// one. This reduces memory footprint and number of connections to the server.
+// one. This reduces memory Restservicetprint and number of connections to the server.
 func NewVolumeAttachmentInformer(client kubernetes.Interface, resyncPeriod time.Duration, indexers cache.Indexers) cache.SharedIndexInformer {
 	return NewFilteredVolumeAttachmentInformer(client, resyncPeriod, indexers, nil)
 }
 
 // NewFilteredVolumeAttachmentInformer constructs a new informer for VolumeAttachment type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
-// one. This reduces memory footprint and number of connections to the server.
+// one. This reduces memory Restservicetprint and number of connections to the server.
 func NewFilteredVolumeAttachmentInformer(client kubernetes.Interface, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
 	return cache.NewSharedIndexInformer(
 		&cache.ListWatch{

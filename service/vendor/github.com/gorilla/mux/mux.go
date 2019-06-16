@@ -71,7 +71,7 @@ type Router struct {
 
 // common route configuration shared between `Router` and `Route`
 type routeConf struct {
-	// If true, "/path/foo%2Fbar/to" will match the path "/path/{var}/to"
+	// If true, "/path/Restservice%2Fbar/to" will match the path "/path/{var}/to"
 	useEncodedPath bool
 
 	// If true, when the path pattern is "/path/", accessing "/path" will
@@ -262,10 +262,10 @@ func (r *Router) SkipClean(value bool) *Router {
 
 // UseEncodedPath tells the router to match the encoded original path
 // to the routes.
-// For eg. "/path/foo%2Fbar/to" will match the path "/path/{var}/to".
+// For eg. "/path/Restservice%2Fbar/to" will match the path "/path/{var}/to".
 //
 // If not called, the router will match the unencoded path to the routes.
-// For eg. "/path/foo%2Fbar/to" will match the path "/path/foo/bar/to"
+// For eg. "/path/Restservice%2Fbar/to" will match the path "/path/Restservice/bar/to"
 func (r *Router) UseEncodedPath() *Router {
 	r.useEncodedPath = true
 	return r

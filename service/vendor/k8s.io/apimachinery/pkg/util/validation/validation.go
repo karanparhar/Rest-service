@@ -172,8 +172,8 @@ func IsDNS1035Label(value string) []string {
 
 // wildcard definition - RFC 1034 section 4.3.3.
 // examples:
-// - valid: *.bar.com, *.foo.bar.com
-// - invalid: *.*.bar.com, *.foo.*.com, *bar.com, f*.bar.com, *
+// - valid: *.bar.com, *.Restservice.bar.com
+// - invalid: *.*.bar.com, *.Restservice.*.com, *bar.com, f*.bar.com, *
 const wildcardDNS1123SubdomainFmt = "\\*\\." + dns1123SubdomainFmt
 const wildcardDNS1123SubdomainErrMsg = "a wildcard DNS-1123 subdomain must start with '*.', followed by a valid DNS subdomain, which must consist of lower case alphanumeric characters, '-' or '.' and end with an alphanumeric character"
 

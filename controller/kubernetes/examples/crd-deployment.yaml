@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
         - name: crd
-          image: crd:latest
+          image: controller:latest
           imagePullPolicy: Never
           command: ["./crd"]

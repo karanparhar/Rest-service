@@ -76,7 +76,7 @@ const (
 //	"apiVersion":"v1",
 //	"myPlugin": {
 //		"kind":"PluginA",
-//		"aOption":"foo",
+//		"aOption":"Restservice",
 //	},
 // }
 //

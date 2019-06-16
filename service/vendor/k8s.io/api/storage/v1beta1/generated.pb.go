@@ -240,10 +240,10 @@ func (m *CSIDriverSpec) MarshalTo(dAtA []byte) (int, error) {
 		}
 		i++
 	}
-	if m.PodInfoOnMount != nil {
+	if m.PodInRestservicenMount != nil {
 		dAtA[i] = 0x10
 		i++
-		if *m.PodInfoOnMount {
+		if *m.PodInRestservicenMount {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
@@ -820,7 +820,7 @@ func (m *CSIDriverSpec) Size() (n int) {
 	if m.AttachRequired != nil {
 		n += 2
 	}
-	if m.PodInfoOnMount != nil {
+	if m.PodInRestservicenMount != nil {
 		n += 2
 	}
 	return n
@@ -1059,7 +1059,7 @@ func (this *CSIDriverSpec) String() string {
 	}
 	s := strings.Join([]string{`&CSIDriverSpec{`,
 		`AttachRequired:` + valueToStringGenerated(this.AttachRequired) + `,`,
-		`PodInfoOnMount:` + valueToStringGenerated(this.PodInfoOnMount) + `,`,
+		`PodInRestservicenMount:` + valueToStringGenerated(this.PodInRestservicenMount) + `,`,
 		`}`,
 	}, "")
 	return s
@@ -1507,7 +1507,7 @@ func (m *CSIDriverSpec) Unmarshal(dAtA []byte) error {
 			m.AttachRequired = &b
 		case 2:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field PodInfoOnMount", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field PodInRestservicenMount", wireType)
 			}
 			var v int
 			for shift := uint(0); ; shift += 7 {
@@ -1525,7 +1525,7 @@ func (m *CSIDriverSpec) Unmarshal(dAtA []byte) error {
 				}
 			}
 			b := bool(v != 0)
-			m.PodInfoOnMount = &b
+			m.PodInRestservicenMount = &b
 		default:
 			iNdEx = preIndex
 			skippy, err := skipGenerated(dAtA[iNdEx:])

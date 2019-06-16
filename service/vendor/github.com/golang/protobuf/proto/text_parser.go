@@ -456,7 +456,7 @@ func (p *textParser) readStruct(sv reflect.Value, terminator string) error {
 			// Looks like an extension or an Any.
 			//
 			// TODO: Check whether we need to handle
-			// namespace rooted names (e.g. ".something.Foo").
+			// namespace rooted names (e.g. ".something.Restservice").
 			extName, err := p.consumeExtName()
 			if err != nil {
 				return err

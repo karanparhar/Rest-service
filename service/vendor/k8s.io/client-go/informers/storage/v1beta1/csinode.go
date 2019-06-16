@@ -45,14 +45,14 @@ type cSINodeInformer struct {
 
 // NewCSINodeInformer constructs a new informer for CSINode type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
-// one. This reduces memory footprint and number of connections to the server.
+// one. This reduces memory Restservicetprint and number of connections to the server.
 func NewCSINodeInformer(client kubernetes.Interface, resyncPeriod time.Duration, indexers cache.Indexers) cache.SharedIndexInformer {
 	return NewFilteredCSINodeInformer(client, resyncPeriod, indexers, nil)
 }
 
 // NewFilteredCSINodeInformer constructs a new informer for CSINode type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
-// one. This reduces memory footprint and number of connections to the server.
+// one. This reduces memory Restservicetprint and number of connections to the server.
 func NewFilteredCSINodeInformer(client kubernetes.Interface, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
 	return cache.NewSharedIndexInformer(
 		&cache.ListWatch{

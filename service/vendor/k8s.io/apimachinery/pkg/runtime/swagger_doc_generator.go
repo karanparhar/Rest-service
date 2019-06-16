@@ -149,7 +149,7 @@ func writeFuncHeader(b *buffer, structName string, indent int) {
 	b.addLine(s, indent)
 }
 
-func writeFuncFooter(b *buffer, structName string, indent int) {
+func writeFuncRestserviceter(b *buffer, structName string, indent int) {
 	b.addLine("}\n", indent) // Closes the map definition
 
 	s := fmt.Sprintf("func (%s) SwaggerDoc() map[string]string {\n", structName)
@@ -218,7 +218,7 @@ func WriteSwaggerDocFunc(kubeTypes []KubeTypes, w io.Writer) error {
 
 		writeFuncHeader(buffer, structName, indent)
 		writeMapBody(buffer, docfulTypes, indent)
-		writeFuncFooter(buffer, structName, indent)
+		writeFuncRestserviceter(buffer, structName, indent)
 		buffer.addLine("\n", 0)
 
 		if err := buffer.flushLines(w); err != nil {

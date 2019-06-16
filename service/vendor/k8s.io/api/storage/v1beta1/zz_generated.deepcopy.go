@@ -93,8 +93,8 @@ func (in *CSIDriverSpec) DeepCopyInto(out *CSIDriverSpec) {
 		*out = new(bool)
 		**out = **in
 	}
-	if in.PodInfoOnMount != nil {
-		in, out := &in.PodInfoOnMount, &out.PodInfoOnMount
+	if in.PodInRestservicenMount != nil {
+		in, out := &in.PodInRestservicenMount, &out.PodInRestservicenMount
 		*out = new(bool)
 		**out = **in
 	}

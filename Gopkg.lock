@@ -73,7 +73,7 @@
   version = "v1.0.0"
 
 [[projects]]
-  digest = "1:65c4414eeb350c47b8de71110150d0ea8a281835b1f386eacaa3ad7325929c21"
+  digest = "1:d1a3774c1f8336a21669d6da87a7bafb4d6171a84752268b7011e767d6722c2b"
   name = "github.com/googleapis/gnostic"
   packages = [
     "OpenAPIv2",
@@ -81,8 +81,8 @@
     "extensions",
   ]
   pruneopts = "UT"
-  revision = "7c663266750e7d82587642f65e60bc4083f1f84e"
-  version = "v0.2.0"
+  revision = "e73c7ec21d36ddb0711cb36d1502d18363b5c2c9"
+  version = "v0.3.0"
 
 [[projects]]
   digest = "1:664d37ea261f0fc73dd17f4a1f5f46d01fbb0b0d75f6375af064824424109b7d"
@@ -188,7 +188,7 @@
     "idna",
   ]
   pruneopts = "UT"
-  revision = "3f473d35a33aa6fdd203e306dc439b797820e3f1"
+  revision = "d28f0bde5980168871434b95cfc858db9f2a7a99"
 
 [[projects]]
   branch = "master"
@@ -203,14 +203,14 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:5d73dac5b6c4fc0d6ca19db25857fa8765fbab79bd7f7a6ae8b3c328eec65c30"
+  digest = "1:3398992b8f4b00ce4a6a5f9770008cf66dcff8f128b51eeab8c1f657096cac8f"
   name = "golang.org/x/sys"
   packages = [
     "unix",
     "windows",
   ]
   pruneopts = "UT"
-  revision = "5ed2794edfdc1c54dfb61d619c5944285f35d444"
+  revision = "15dcb6c0061f497a3f66e3ea034b629c6dd4d99e"
 
 [[projects]]
   digest = "1:8d8faad6b12a3a4c819a3f9618cb6ee1fa1cfc33253abeeea8b55336721e3405"
@@ -320,7 +320,7 @@
     "storage/v1beta1",
   ]
   pruneopts = "UT"
-  revision = "db0771252981291218c9395d960fddca45a62c55"
+  revision = "1d1b8b084b3057162613acc6cba8af4e30dc2ec4"
 
 [[projects]]
   branch = "master"
@@ -375,7 +375,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:6f33c8d9b45cd5dc94a8a14334273a0466c52fd817f1a621985656cf7d06787d"
+  digest = "1:5df89b62e12d999940ead5499170997f3cfb12fa075864eaa0e11e30ad1d11c1"
   name = "k8s.io/client-go"
   packages = [
     "discovery",
@@ -528,7 +528,7 @@
     "util/workqueue",
   ]
   pruneopts = "UT"
-  revision = "5c45477a8ae75e66d03770322595f6adced69e13"
+  revision = "7de88b14dcc8f8ebdc2953e776666387205cb592"
 
 [[projects]]
   digest = "1:c283ca5951eb7d723d3300762f96ff94c2ea11eaceb788279e2b7327f92e4f2a"

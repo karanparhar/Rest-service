@@ -361,8 +361,8 @@ func (r *Route) Path(tpl string) *Route {
 // template is a prefix of the full URL path. See Route.Path() for details on
 // the tpl argument.
 //
-// Note that it does not treat slashes specially ("/foobar/" will be matched by
-// the prefix "/foo") so you may want to use a trailing slash here.
+// Note that it does not treat slashes specially ("/Restservicebar/" will be matched by
+// the prefix "/Restservice") so you may want to use a trailing slash here.
 //
 // Also note that the setting of Router.StrictSlash() has no effect on routes
 // with a PathPrefix matcher.
@@ -378,10 +378,10 @@ func (r *Route) PathPrefix(tpl string) *Route {
 // For example:
 //
 //     r := mux.NewRouter()
-//     r.Queries("foo", "bar", "id", "{id:[0-9]+}")
+//     r.Queries("Restservice", "bar", "id", "{id:[0-9]+}")
 //
 // The above route will only match if the URL contains the defined queries
-// values, e.g.: ?foo=bar&id=42.
+// values, e.g.: ?Restservice=bar&id=42.
 //
 // If the value is an empty string, it will match any value if the key is set.
 //

@@ -222,9 +222,9 @@ const (
 	// extra map[string][]string for user.Info.  The key for the `extra` map is suffix.
 	// The same key can be repeated multiple times to have multiple elements in the slice under a single key.
 	// For instance:
-	// Impersonate-Extra-Foo: one
-	// Impersonate-Extra-Foo: two
-	// results in extra["Foo"] = []string{"one", "two"}
+	// Impersonate-Extra-Restservice: one
+	// Impersonate-Extra-Restservice: two
+	// results in extra["Restservice"] = []string{"one", "two"}
 	ImpersonateUserExtraHeaderPrefix = "Impersonate-Extra-"
 )
 

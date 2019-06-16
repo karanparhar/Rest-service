@@ -5796,9 +5796,9 @@ const (
 	ERROR_BCD_NOT_ALL_ENTRIES_IMPORTED                                        syscall.Errno = 0x80390001
 	ERROR_BCD_TOO_MANY_ELEMENTS                                               syscall.Errno = 0xC0390002
 	ERROR_BCD_NOT_ALL_ENTRIES_SYNCHRONIZED                                    syscall.Errno = 0x80390003
-	ERROR_VHD_DRIVE_FOOTER_MISSING                                            syscall.Errno = 0xC03A0001
-	ERROR_VHD_DRIVE_FOOTER_CHECKSUM_MISMATCH                                  syscall.Errno = 0xC03A0002
-	ERROR_VHD_DRIVE_FOOTER_CORRUPT                                            syscall.Errno = 0xC03A0003
+	ERROR_VHD_DRIVE_RestserviceTER_MISSING                                            syscall.Errno = 0xC03A0001
+	ERROR_VHD_DRIVE_RestserviceTER_CHECKSUM_MISMATCH                                  syscall.Errno = 0xC03A0002
+	ERROR_VHD_DRIVE_RestserviceTER_CORRUPT                                            syscall.Errno = 0xC03A0003
 	ERROR_VHD_FORMAT_UNKNOWN                                                  syscall.Errno = 0xC03A0004
 	ERROR_VHD_FORMAT_UNSUPPORTED_VERSION                                      syscall.Errno = 0xC03A0005
 	ERROR_VHD_SPARSE_HEADER_CHECKSUM_MISMATCH                                 syscall.Errno = 0xC03A0006

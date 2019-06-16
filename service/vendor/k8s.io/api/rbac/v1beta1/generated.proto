@@ -101,7 +101,7 @@ message PolicyRule {
   repeated string apiGroups = 2;
 
   // Resources is a list of resources this rule applies to.  '*' represents all resources in the specified apiGroups.
-  // '*/foo' represents the subresource 'foo' for all resources in the specified apiGroups.
+  // '*/Restservice' represents the subresource 'Restservice' for all resources in the specified apiGroups.
   // +optional
   repeated string resources = 3;
 

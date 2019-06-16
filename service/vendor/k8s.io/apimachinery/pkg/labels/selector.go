@@ -796,7 +796,7 @@ func (p *Parser) parseExactValue() (sets.String, error) {
 // VALUE is a sequence of zero or more characters "([A-Za-z0-9_-\.])". Max length is 63 characters.
 // Delimiter is white space: (' ', '\t')
 // Example of valid syntax:
-//  "x in (foo,,baz),y,z notin ()"
+//  "x in (Restservice,,baz),y,z notin ()"
 //
 // Note:
 //  (1) Inclusion - " in " - denotes that the KEY exists and is equal to any of the

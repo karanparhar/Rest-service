@@ -15,5 +15,5 @@ RUN go build -o crd
 FROM alpine
 
 WORKDIR /root/crd
-COPY --from=build-evn /go/src/github.com/Rest-service/controller/controller /root/controller
+COPY --from=build-evn /go/src/github.com/Rest-service/controller/crd /root/crd
 ENTRYPOINT [ "./crd"]

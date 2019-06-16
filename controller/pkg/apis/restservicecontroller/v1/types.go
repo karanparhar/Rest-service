@@ -12,7 +12,7 @@ type RestService struct {
 	Status RestServiceStatus `json:"status"`
 }
 
-// RestServiceSpec is the spec for a Foo resource
+// RestServiceSpec is the spec for a Restservice resource
 type RestServiceSpec struct {
 	DeploymentName string `json:"deploymentName"`
 	NameSpace      string `json:"namespace"`
@@ -20,7 +20,7 @@ type RestServiceSpec struct {
 	Replicas       *int32 `json:"replicas"`
 }
 
-// FooStatus is the status for a Foo resource
+// RestserviceStatus is the status for a Restservice resource
 type RestServiceStatus struct {
 	AvailableReplicas int32    `json:"availableReplicas"`
 	ActionHistory     []string `json:"actionHistory"`

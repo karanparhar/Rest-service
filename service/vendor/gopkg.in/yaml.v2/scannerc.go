@@ -71,7 +71,7 @@ import (
 // Example:
 //
 //      %YAML   1.1
-//      %TAG    !   !foo
+//      %TAG    !   !Restservice
 //      %TAG    !yaml!  tag:yaml.org,2002:
 //      ---
 //
@@ -79,7 +79,7 @@ import (
 //
 //      STREAM-START(utf-8)
 //      VERSION-DIRECTIVE(1,1)
-//      TAG-DIRECTIVE("!","!foo")
+//      TAG-DIRECTIVE("!","!Restservice")
 //      TAG-DIRECTIVE("!yaml","tag:yaml.org,2002:")
 //      DOCUMENT-START
 //      STREAM-END

@@ -939,8 +939,8 @@ type PodSecurityPolicySpec struct {
 	// Kubelet has to whitelist all allowed unsafe sysctls explicitly to avoid rejection.
 	//
 	// Examples:
-	// e.g. "foo/*" allows "foo/bar", "foo/baz", etc.
-	// e.g. "foo.*" allows "foo.bar", "foo.baz", etc.
+	// e.g. "Restservice/*" allows "Restservice/bar", "Restservice/baz", etc.
+	// e.g. "Restservice.*" allows "Restservice.bar", "Restservice.baz", etc.
 	// +optional
 	AllowedUnsafeSysctls []string `json:"allowedUnsafeSysctls,omitempty" protobuf:"bytes,19,rep,name=allowedUnsafeSysctls"`
 	// forbiddenSysctls is a list of explicitly forbidden sysctls, defaults to none.
@@ -948,8 +948,8 @@ type PodSecurityPolicySpec struct {
 	// as a prefix of forbidden sysctls. Single * means all sysctls are forbidden.
 	//
 	// Examples:
-	// e.g. "foo/*" forbids "foo/bar", "foo/baz", etc.
-	// e.g. "foo.*" forbids "foo.bar", "foo.baz", etc.
+	// e.g. "Restservice/*" forbids "Restservice/bar", "Restservice/baz", etc.
+	// e.g. "Restservice.*" forbids "Restservice.bar", "Restservice.baz", etc.
 	// +optional
 	ForbiddenSysctls []string `json:"forbiddenSysctls,omitempty" protobuf:"bytes,20,rep,name=forbiddenSysctls"`
 	// AllowedProcMountTypes is a whitelist of allowed ProcMountTypes.
@@ -973,8 +973,8 @@ type AllowedHostPath struct {
 	// Trailing slashes are trimmed when validating the path prefix with a host path.
 	//
 	// Examples:
-	// `/foo` would allow `/foo`, `/foo/` and `/foo/bar`
-	// `/foo` would not allow `/food` or `/etc/foo`
+	// `/Restservice` would allow `/Restservice`, `/Restservice/` and `/Restservice/bar`
+	// `/Restservice` would not allow `/Restserviced` or `/etc/Restservice`
 	PathPrefix string `json:"pathPrefix,omitempty" protobuf:"bytes,1,rep,name=pathPrefix"`
 
 	// when set to true, will allow host volumes matching the pathPrefix only if all volume mounts are readOnly.
