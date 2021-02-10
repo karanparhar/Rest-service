@@ -13,7 +13,7 @@ This is sample rest api service with single endpoint written in go, to be used i
 ```
 $ mkdir $GOPATH/src/github.com/
 $ cd $GOPATH/src/github.com/
-$ git clone https://karanjit@bitbucket.org/karanjit/restservice.git
+$ git clone https://karanjit@bitbucket.org/karanjit/restservice.git Rest-service
 $ cd Rest-service
 $ make all
 $ make create-crd
