@@ -1,6 +1,6 @@
 # Rest Service
 
-This is sample rest api service with single endpoint written in go, to be used in [sample-controller](git clone https://karanjit@bitbucket.org/karanjit/restservice.git) project.
+This is sample rest api service with single endpoint written in go, to be used in [sample-controller](git clone https://github.com/karanparhar/Rest-service.git) project.
 
 ## Quick start
 
@@ -13,7 +13,7 @@ This is sample rest api service with single endpoint written in go, to be used i
 ```
 $ mkdir $GOPATH/src/github.com/
 $ cd $GOPATH/src/github.com/
-$ git clone https://karanjit@bitbucket.org/karanjit/restservice.git Rest-service
+$ git clone https://github.com/karanparhar/Rest-service.git
 $ cd Rest-service
 $ make all
 $ make create-crd
